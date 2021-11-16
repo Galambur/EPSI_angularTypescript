@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {UserLdap} from "../model/user-ldap";
 import {FormBuilder} from "@angular/forms";
+import {ConfirmValidatorParentMatcher, passwordValidator} from "./passwords-validator.directive";
 
 export abstract class LdapDetailComponent{
   user: UserLdap;
@@ -9,6 +9,7 @@ export abstract class LdapDetailComponent{
   processValidateRunning = false;
   passwordPlaceHolder: string;
   errorMessage='';
+  confirmValidParentMatcher = new ConfirmValidatorParentMatcher();
 
   userForm = this.fb.group({
     login: [''],
@@ -17,7 +18,8 @@ export abstract class LdapDetailComponent{
     passwordGroup: this.fb.group({
       password:[''],
       confirmPassword:[''],
-    })
+    }, { validators: passwordValidator }),
+    mail: {value: '', disabled:true},
   })
 
   protected constructor(

@@ -3,6 +3,7 @@ import {UsersService} from "../service/users.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder} from "@angular/forms";
 import {LdapDetailComponent} from "../ldap-detail/ldap-detail.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-ldap-edit',
@@ -15,29 +16,49 @@ export class LdapEditComponent extends LdapDetailComponent implements OnInit {
     private usersService: UsersService,
     private route: ActivatedRoute,
     fb: FormBuilder,
-    router: Router
+    router: Router,
+    private snackBar: MatSnackBar
   ) {
     super(false, fb, router);
   }
 
   ngOnInit(): void {
     super.onInit();
+    this.getUser();
   }
 
   private getUser(): void {
     const login = this.route.snapshot.paramMap.get('id');
-    console.log('in detail : ' + login);
 
+    this.processLoadRunning = true;
     this.usersService.getUser(login).subscribe(
       user => {
         this.user = user;
-        console.log("LdapDetail getUser = ");
-        console.log(user);
+        this.copyUserToFormControl();
+        this.processLoadRunning = false;
+      },
+      error => {
+        this.processLoadRunning = false;
+        this.errorMessage = "L'utilisateur n'existe pas";
+        this.snackBar.open("Utilisateur non trouvé", "X");
       }
     )
   }
 
   validateForm(): void {
-    console.log('Ldap edit component - validateForm');
+    console.log('LdapEditComponent - validateForm');
+    this.processValidateRunning = true;
+    this.usersService.updateUser(this.getUserFormControl()).subscribe(
+      data => {
+        this.processValidateRunning = false;
+        this.errorMessage = '';
+        this.snackBar.open('Utilisateur modifié', 'X');
+      },
+      error => {
+        this.processValidateRunning = false;
+        this.errorMessage = 'Une erreur est survenue dans la modification !';
+        this.snackBar.open('Utilisateur non modifié :', 'X');
+      }
+    )
   }
 }
