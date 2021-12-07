@@ -10,6 +10,9 @@ import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppMaterialModule} from "../appmaterial.module";
 import { MatSnackBarModule} from "@angular/material/snack-bar";
+import {HttpClientModule} from "@angular/common/http";
+import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
+import {InMemoryUsersService} from "../service/in-memory-users.service";
 
 
 @NgModule({
@@ -26,7 +29,11 @@ import { MatSnackBarModule} from "@angular/material/snack-bar";
     ReactiveFormsModule,
     AppMaterialModule,
     LdapManagementRoutingModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryUsersService, {dataEncapsulation: false}
+    )
   ],
   exports: [
     LdapListComponent,
