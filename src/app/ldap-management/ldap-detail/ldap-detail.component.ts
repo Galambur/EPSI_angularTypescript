@@ -1,5 +1,5 @@
 import {Router} from "@angular/router";
-import {UserLdap} from "../model/user-ldap";
+import {UserLdap} from "../../model/user-ldap";
 import {FormBuilder} from "@angular/forms";
 import {ConfirmValidatorParentMatcher, passwordValidator} from "./passwords-validator.directive";
 
