@@ -12,8 +12,9 @@ import {Observable} from "rxjs";
 export class InMemoryUsersService implements InMemoryDbService {
   private usersUrl = '';
   private httpOptions = new HttpHeaders({'Content-Type': 'application/json'});
+  private http: HttpClient;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.usersUrl = environment.usersApiUrl;
   }
 
