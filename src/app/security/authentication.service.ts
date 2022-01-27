@@ -63,11 +63,8 @@ export class AuthenticationService {
       tap((data: AuthenticationResponse) => AuthentificationService.setToken(data.token))
     );*/
 
-    const response: AuthenticationResponse = {
-      status: true,
-      message: 'HTTP 200',
-      token: 'atoken'
-    };
+    const response: AuthenticationResponse
+      = { status: true, message: 'HTTP 200', token: 'atoken' };
     AuthenticationService.setToken('token');
     return of(response);
   }
