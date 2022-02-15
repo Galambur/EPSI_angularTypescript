@@ -18,7 +18,6 @@ import {MatCardModule} from "@angular/material/card";
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     PageNotFoundComponent,
     LoginComponent
   ],
@@ -34,9 +33,10 @@ import {MatCardModule} from "@angular/material/card";
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryUsersService, {dataEncapsulation: false}
     ),
-    MatCardModule
   ],
   providers: [],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
